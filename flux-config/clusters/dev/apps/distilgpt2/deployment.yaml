@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "distilgpt2-demo-vllm"
+  labels:
+    app: "distilgpt2-demo-vllm"
+spec:
+  containers:
+  - name: vllm
+    image: "jozu.ml/oyedeletemitope76/distilgpt2-demo/vllm-cpu:1.0.0"
+    ports:
+      - containerPort: 8000
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 8000
+      initialDelaySeconds: 30
+      periodSeconds: 10
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "2Gi"
+        cpu: "1000m"
